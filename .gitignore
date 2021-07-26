@@ -1,0 +1,4 @@
+# files that will be ignored by git
+php-apache
+public-html/db-pswd.inc.php
+docker-compose.yml
