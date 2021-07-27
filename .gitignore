@@ -2,3 +2,4 @@
 php-apache
 public-html/db-pswd.inc.php
 docker-compose.yml
+public-html/phpmyadmin
