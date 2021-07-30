@@ -1,3 +1,8 @@
+<?php 
+    session_start(); 
+    require('system.ctrl.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,17 +22,16 @@
 
         <hr><br>
 
-        <?php if ($_GET["msgid"]!="") { ?>
-            <div class="row">
-                <div class="col-12">
-                    <div class="alert alert-success" role="alert">Everything is valid, we can store the record to the database</div>
-                </div>
-            </div>
-        <?php } ?>
+        <?php 
+            if (isset($_SESSION['msgid']) && $_SESSION["msgid"] != "") { 
+                echo phpShowFeedback($_SESSION['msgid']);
+                $_SESSION['msgid'] = '';
+            }
+        ?>
 
         <div class="row">
             <div class="col-6">
-                <form name='formSignUp' action='signup.ctrl.php' method='POST'>
+                <form name='formSignUp' action='signup.ctrl.php' method='POST' novalidate>
                     <div class="form-group">
                         <label for="formSignUpEmail">Email address</label>
                         <input      type="email" 
