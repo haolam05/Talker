@@ -12,10 +12,21 @@
     $password_validation = preg_match($user_password_pattern, $user_password);
 
     if ($email_validation && $password_validation && $user_password == $_POST["formSignUpPasswordConf"]) {
-        $db_data = array($user_email, $user_password);
-        $db_query = 'INSERT INTO users (user_email, user_password) VALUES (?, ?)';
-        phpModifyDB($db_query, $db_data);
-        $_SESSION['msgid'] = '811';
+        //checking if the submitted email is already in users table
+        $db_data = array($user_email);
+        $db_query = 'SELECT user_email FROM users WHERE user_email = ?';
+        $isAlreadySignedUp = phpFetchDB($db_query, $db_data);
+
+        //if no result is returned, insert new record to the table, otherwise display feedback
+        if (!is_array($isAlreadySignedUp)) {
+            $db_data = array($user_email, $user_password);
+            $db_query = 'INSERT INTO users (user_email, user_password) values (?, ?)';
+            phpModifyDB($db_query, $db_data);
+            $_SESSION["msgid"] = "811";
+        }else{
+            $_SESSION["msgid"] = "804";
+        }
+        
         header('Location: index.php');
     } else if (!$email_validation) {
         $_SESSION['msgid'] = '801';
