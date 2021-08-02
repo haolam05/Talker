@@ -1,5 +1,11 @@
 <?php
     require("db-conn.inc.php");
+    require("PHPMailer/PHPMailer.php");
+    require("PHPMailer/Exception.php");
+    require("PHPMailer/SMTP.php");
+
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
 
     // Place directly inside Bootstrap container to keep the right structure of Bootstrap document
     function phpShowFeedback($feedback_id) {
@@ -24,9 +30,29 @@
             $feedback_text="This email is already used!";
             break;
 
+            case "805":
+            $feedback_type="danger";
+            $feedback_text="This email is not registered!";
+            break;   
+
+            case "806":
+            $feedback_type="danger";
+            $feedback_text="Your accouunt has been already activated!";
+            break;     
+            
+            case "807":
+            $feedback_type="danger";
+            $feedback_text="Verification link is corrupted!";
+            break;     
+
             case "811":
             $feedback_type="success";
-            $feedback_text="You have been successfully signed up!";
+            $feedback_text="You have been activated. You can sign in!";
+            break;
+
+            case "812":
+            $feedback_type="warning";
+            $feedback_text="Check your inbox and verify your email address!";
             break;
 
             default:
@@ -65,5 +91,55 @@
 
         //setting the fetch mode and returning the result
         return $statement->fetch(PDO::FETCH_ASSOC);
+    }
+
+    function phpSendEmail($to, $subject, $content) {
+        //Create a new PHPMailer instance
+        $mail = new PHPMailer;
+
+        //Tell PHPMailer to use SMTP
+        $mail->isSMTP();
+
+        //Enable SMTP debugging
+        // 0 = off (for production use)
+        // 1 = client messages
+        // 2 = client and server messages
+        $mail->SMTPDebug = 0;
+
+        //Set the hostname of the mail server
+        $mail->Host = 'smtp.gmail.com';
+
+        //Set the SMTP port number
+        $mail->Port = 587;
+
+        //Set the encryption system to use tls
+        $mail->SMTPSecure = 'tls';
+
+        //Whether to use SMTP authentication
+        $mail->SMTPAuth = true;
+
+        //Username to use for SMTP authentication - use full email address for gmail
+        $mail->Username = "tuonghao2001@gmail.com";
+
+        //Password to use for SMTP authentication, your Gmail password comes here
+        $mail->Password = SMTP_PSWD;
+
+        //Set who the message is to be sent from
+        $mail->setFrom('tuonghao2001@gmail.com', 'Hao Lam');
+
+        //Set who the message is to be sent to
+        $mail->addAddress($to);
+        
+        //Set email format to HTML and add content
+        $mail->isHTML(true);
+        $mail->Subject = $subject;
+        $mail->Body    = $content;
+
+        //send the message, check for errors
+        if (!$mail->send()) {
+            echo "Mailer Error: " . $mail->ErrorInfo;
+        } else {
+            $_SESSION["msgid"] = '812';
+        }
     }
 ?>
