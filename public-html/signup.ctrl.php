@@ -22,8 +22,8 @@
 
         //if no result is returned, insert new record to the table, otherwise display feedback
         if (!is_array($isAlreadySignedUp)) {
-            $db_data = array($user_email, $hashed_user_password);
-            $db_query = 'INSERT INTO users (user_email, user_password) values (?, ?)';
+            $db_data = array($user_email, $hashed_user_password, 0);    // means as default, account not activate
+            $db_query = 'INSERT INTO users (user_email, user_password, user_verified) VALUES (?, ?, ?)';
             phpModifyDB($db_query, $db_data);
             $verify_message = '
                 Welcome to Talker! Thanks for signing up!<br><br>
@@ -35,8 +35,9 @@
             phpSendEmail($user_email, 'Verify your account', $verify_message);
         }else{
             $_SESSION["msgid"] = "804";
-            header('Location: index.php');
         }
+        
+        header('Location: index.php');
     } else if (!$email_validation) {
         $_SESSION['msgid'] = '801';
         header('Location: index.php');
