@@ -36,16 +36,19 @@
         }else{
             $_SESSION["msgid"] = "804";
         }
-        
+
         header('Location: index.php');
     } else if (!$email_validation) {
         $_SESSION['msgid'] = '801';
+        $_SESSION['formSignUpEmail'] = $user_email;
         header('Location: index.php');
     } else if (!$password_validation) {
         $_SESSION['msgid'] = '802';
+        $_SESSION['formSignUpEmail'] = $user_email;
         header('Location: index.php');
     } else if ($user_password != $_POST["formSignUpPasswordConf"]){
         $_SESSION['msgid'] = '803';
+        $_SESSION['formSignUpEmail'] = $user_email;
         header('Location: index.php');
     } 
     
