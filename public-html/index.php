@@ -13,15 +13,12 @@
     
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    
+    <!-- TALKER CSS -->
+    <link rel="stylesheet" href="talker.css">
   </head>
   <body>
     <div class="container">
-        <div class="row justify-content-md-center">
-            <div class="col-12 col-md-auto"><h1>TALKER | SIGN UP</h1></div>
-        </div>
-
-        <hr><br>
-
         <!-- SYSTEM-WIDE FEEDBACK -->                                           
         <?php if (isset($_SESSION["msgid"]) && $_SESSION["msgid"]!="" && phpShowSystemFeedback($_SESSION["msgid"])[0]!="") { ?>
 
@@ -36,8 +33,41 @@
         <?php } ?>
         <!-- SYSTEM-WIDE FEEDBACK -->
 
+        <!-- SIGN IN FORM -->
+        <div class="row sign-in-row">
+            <div class="col-lg-6"><h1>TALKER</h1></div>
+            <div class="col-lg-6">
+                <form name="formSignIn" action="signin.ctrl.php" method="POST" novalidate>
+                    <div class="form-inline">
+                        <label class="sr-only" for="formSignInEmail">Email</label>
+                        <input  type="email" 
+                                class="form-control form-control-sm mb-2 mr-sm-2 mb-sm-0" 
+                                id="formSignInEmail" 
+                                name="formSignInEmail" 
+                                placeholder="Email"
+                                onkeyup="jsSignInValidateEmail()">
+
+                        <label class="sr-only" for="formSignInPassword">Password</label>
+                        <input  type="password" 
+                                class="form-control form-control-sm mb-2 mr-sm-2 mb-sm-0" 
+                                id="formSignInPassword" 
+                                name="formSignInPassword" 
+                                placeholder="Password"
+                                onkeyup="jsSignInValidatePassword()">
+
+                        <button type="submit" id="formSignInSubmit" class="btn btn-primary btn-sm">Sign In</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- SIGN IN FORM -->
+
+        <h4>Create new account</h4>
+        <hr>
+
+        <!-- SIGN UP FORM -->
         <div class="row">
-            <div class="col-6">
+            <div class="col-lg-6">
                 <form name='formSignUp' action='signup.ctrl.php' method='POST' novalidate>
                     <div class="form-group">
                         <label for="formSignUpEmail">Email address</label>
@@ -92,7 +122,7 @@
                 </form>
             </div>
 
-            <div class="col-6">
+            <div class="col-lg-6">
                 <p>Hello and welcome to Talker! We are very happy that you want to join our great community!</p>
                 <p>Please, enter your email and password. Your must have access to your email because we will send
             a confirmation code to that address. Your password must be between 8 and 16 characters long, with at
@@ -100,6 +130,7 @@
                 <p>We hope you'll enjoy Talker!</p>
             </div>
         </div>
+        <!-- SIGN UP FORM -->
     </div>
 
     <?php 
@@ -122,6 +153,49 @@
         document.getElementById("formSignUpSubmit").classList.remove('btn-success');
         document.getElementById("formSignUpSubmit").classList.add('btn-danger');
 
+        var jsSignInEmail = document.getElementById("formSignInEmail");    
+        var jsSignInPassword = document.getElementById("formSignInPassword");
+
+        // replaces green with red box around 'Sign In' button
+        document.getElementById("formSignInSubmit").classList.remove('btn-success');
+        document.getElementById("formSignInSubmit").classList.add('btn-danger');
+
+        function jsSignInSubmitEnable() {
+            if (jsEmailRegexPattern.test(jsSignInEmail.value) && jsPasswordRegexPattern.test(jsSignInPassword.value)) {
+                document.getElementById("formSignInSubmit").disabled = false;
+                document.getElementById("formSignInSubmit").classList.remove("btn-danger");
+                document.getElementById("formSignInSubmit").classList.add("btn-success");
+            } else {
+                document.getElementById("formSignInSubmit").disabled = true;
+                document.getElementById("formSignInSubmit").classList.remove("btn-success");
+                document.getElementById("formSignInSubmit").classList.add("btn-danger");
+            }
+        }
+
+        // checking if email regex valid in sign-in email input
+        function jsSignInValidateEmail() {
+            jsSignInSubmitEnable();
+
+            if (!jsEmailRegexPattern.test(jsSignInEmail.value)) {
+                jsSignInEmail.classList.add("is-invalid");                                       
+            } else {
+                jsSignInEmail.classList.remove("is-invalid");                
+                jsSignInEmail.classList.add("is-valid");                     
+            }
+        }
+
+        // checking if password regex valid in sign-in password input
+        function jsSignInValidatePassword() {
+            jsSignInSubmitEnable();
+
+            if (!jsPasswordRegexPattern.test(jsSignInPassword.value)) {
+                jsSignInPassword.classList.add("is-invalid");                                       
+            } else {
+                jsSignInPassword.classList.remove("is-invalid");                
+                jsSignInPassword.classList.add("is-valid");                     
+            }
+        }
+        
         // if password and email patterns matched required regex and password == passwordConf, enable the 'Sign Up' button, otherwise, disabled it.
         function jsSignUpSubmitEnable() {
             if (jsEmailRegexPattern.test(jsSignUpEmail.value) && jsPasswordRegexPattern.test(jsSignUpPassword.value) && jsSignUpPassword.value == jsSignUpPasswordConf.value) {
