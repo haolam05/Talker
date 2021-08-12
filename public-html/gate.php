@@ -21,6 +21,14 @@
             header('Location: index.php');
         }
     }
+    
+    //fetching the row by uid, fetch returns the first (and only) result entry
+    $db_data = array($_SESSION['uid']);
+    $dbUserRow = phpFetchDB('SELECT * FROM users WHERE user_id = ?', $db_data);
+    
+    if ($dbUserRow["user_verified"] != 1 && $_SESSION["resend"] != 1) { // not yet activated
+        $_SESSION["msgid"] = "809";
+    }
 ?>
 
 <!DOCTYPE html>
@@ -79,6 +87,7 @@
 
     <?php 
         $_SESSION["msgid"]=""; 
+        $_SESSION["resend"]="";
     ?>
 
 	<!-- Optional Javascript -->

@@ -25,15 +25,8 @@
             $db_data = array($user_email, $hashed_user_password, 0);    // means as default, account not activate
             $db_query = 'INSERT INTO users (user_email, user_password, user_verified) VALUES (?, ?, ?)';
             phpModifyDB($db_query, $db_data);
-            $verify_message = '
-                Welcome to Talker! Thanks for signing up!<br><br>
-                Your account has been created but before you can login you need to activate it with the link below.<br><br>
-
-                Please click this link to activate your account:
-                <a href="http://localhost/verify.php?email='.$user_email.'&hash='.$hashed_user_password.'">Verify your email</a>
-            ';
-            phpSendEmail($user_email, 'Verify your account', $verify_message);
-        }else{
+            phpSendVerificationEmail($user_email, $hashed_user_password);
+        } else {
             $_SESSION["msgid"] = "804";
         }
 
