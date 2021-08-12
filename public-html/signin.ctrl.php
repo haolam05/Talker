@@ -40,6 +40,8 @@
 
 			// echo "user ok, password ok, activation ok -> allow user in the system -> feedback message";
 			$_SESSION["uid"] = $dbUserRow["user_id"];
+			setcookie("cookieUserEmail", $user_email, time()+60);
+			setcookie("cookieUserPassword", $dbUserRow["user_password"], time()+60);
 			header('Location: gate.php');
 		}
 

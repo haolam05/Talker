@@ -1,6 +1,11 @@
 <?php 
     session_start(); 
     require('system.ctrl.php');
+
+    //if session uid or cookie uid is not empty redirect to gate.php
+    if ($_SESSION["uid"]!="" || $_COOKIE["cookieUserEmail"]!="") {
+        header('Location: gate.php');
+    }
 ?>
 
 <!DOCTYPE html>
@@ -134,7 +139,10 @@
     </div>
 
     <?php 
-        $_SESSION["msgid"]=""; 
+        //empty the msgid id only if no user is signed in
+        if ($_SESSION["uid"]=="" || $_COOKIE["cookieUserEmail"]=="") {
+            $_SESSION["msgid"]="";
+        }
         $_SESSION["formSignUpEmail"]="";
     ?>
 
@@ -335,7 +343,6 @@
                 jsSignUpPasswordConf.classList.remove("is-invalid");                
                     // add green box
                 jsSignUpPasswordConf.classList.add("is-valid");                     
-
             }
         }
     </script>
