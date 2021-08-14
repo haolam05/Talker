@@ -54,9 +54,22 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarText">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active">
-					<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+				<li class="nav-item <?php if ($_GET['module']=='') { echo 'active'; } ?>">
+					<a  class="nav-link" 
+                        href="gate.php">Home
+                        <?php if ($_GET['module']=='') { ?>
+                            <span class="sr-only"> (current)</span>
+                        <?php } ?>
+                    </a>
 				</li>
+				<li class="nav-item <?php if ($_GET['module']=='settings') { echo 'active'; } ?>">
+					<a  class="nav-link" 
+                        href="gate.php?module=settings">Settings
+                        <?php if ($_GET['module']=='settings') { ?>
+                            <span class="sr-only"> (current)</span>
+                        <?php } ?>
+                    </a>
+				</li>                
 				<li class="nav-item">
 					<a class="nav-link" href="logout.ctrl.php">Logout</a>
 				</li>
@@ -78,6 +91,19 @@
 		<?php } ?>
 		<!-- SYSTEM-WIDE FEEDBACK -->
 
+        <!-- LOAD MODULE -->
+        <?php
+            switch ($_GET["module"]) {
+                case "settings":
+                include('settings.php');
+                break;
+
+                default:
+                break;
+            }
+        ?>
+        <!-- LOAD MODULE -->        
+
         <?php echo "User id is: " . $_SESSION['uid']; ?>
         <br>
         <?php echo "cookieUserEmail: " . $_COOKIE["cookieUserEmail"]; ?>
@@ -87,8 +113,10 @@
 
     <?php 
         $_SESSION["msgid"]=""; 
-        $_SESSION["resend"]="";
+        $_SESSION["resend"]=0;
     ?>
+
+    <script src="gate.js"></script>
 
 	<!-- Optional Javascript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
