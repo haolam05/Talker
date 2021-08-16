@@ -81,13 +81,13 @@
 
 		<!-- SYSTEM-WIDE FEEDBACK -->
 		<?php if (isset($_SESSION["msgid"]) && $_SESSION["msgid"]!="" && phpShowSystemFeedback($_SESSION["msgid"])[0]!="") { ?>
-		<div class="row">
-			<div class="col-12">
-				<div class="alert alert-<?php echo (phpShowSystemFeedback($_SESSION['msgid'])[0]); ?>" role="alert">
-					<?php echo (phpShowSystemFeedback($_SESSION['msgid'])[1]); ?>
-				</div>
-			</div>
-		</div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="alert alert-<?php echo (phpShowSystemFeedback($_SESSION['msgid'])[0]); ?>" role="alert">
+                        <?php echo (phpShowSystemFeedback($_SESSION['msgid'])[1]); ?>
+                    </div>
+                </div>
+            </div>
 		<?php } ?>
 		<!-- SYSTEM-WIDE FEEDBACK -->
 
@@ -103,12 +103,6 @@
             }
         ?>
         <!-- LOAD MODULE -->        
-
-        <?php echo "User id is: " . $_SESSION['uid']; ?>
-        <br>
-        <?php echo "cookieUserEmail: " . $_COOKIE["cookieUserEmail"]; ?>
-        <br>
-        <?php echo "cookieUserPassword: " . $_COOKIE["cookieUserPassword"]; ?>
 	</div>
 
     <?php 

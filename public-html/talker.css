@@ -8,3 +8,11 @@ all of this div children will be displayed as flex, centered both left right and
     margin-bottom: 30px;
     padding: 10px 0 10px 0;
 }
+
+h5 {
+    margin-top: 1em;
+}
+
+hr {
+    margin-top: 0.5em;
+}
