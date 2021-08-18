@@ -16,3 +16,7 @@ h5 {
 hr {
     margin-top: 0.5em;
 }
+
+.nav-link-user, .nav-link-user:hover {
+    color: #ffffff;
+}

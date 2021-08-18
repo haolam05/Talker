@@ -63,6 +63,14 @@
                         <?php } ?>
                     </a>
 				</li>
+				<li class="nav-item <?php if ($_GET['module']=='messaging') { echo 'active'; } ?>">
+					<a  class="nav-link" 
+                        href="gate.php?module=messaging">Messaging
+                        <?php if ($_GET['module']=='messaging') { ?>
+                            <span class="sr-only"> (current)</span>
+                        <?php } ?>
+                    </a>
+				</li>                  
 				<li class="nav-item <?php if ($_GET['module']=='settings') { echo 'active'; } ?>">
 					<a  class="nav-link" 
                         href="gate.php?module=settings">Settings
@@ -75,6 +83,7 @@
 					<a class="nav-link" href="logout.ctrl.php">Logout</a>
 				</li>
 			</ul>
+            <a class="nav-link-user" href="#"> <?php echo $dbUserRow["user_email"]; ?> </a>
 		</div>
 	</nav>
 
@@ -97,6 +106,10 @@
             switch ($_GET["module"]) {
                 case "settings":
                 include('settings.php');
+                break;
+
+                case "messaging":
+                include('messaging.php');
                 break;
 
                 default:
