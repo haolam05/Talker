@@ -3,7 +3,7 @@
     $dbUserRow = phpFetchDB('SELECT * FROM users WHERE user_id = ?', $db_data);
 ?>
 
-<h4>Basics</h4>
+<h5>Basics</h5>
 <hr>
 
 <div class="row">
@@ -74,9 +74,71 @@
                     </div>
                 <?php } ?>
 			</div>
-            
+
 			<button type="submit" id="formSettingsBasicsSubmit" name="formSettingsBasicsSubmit" class="btn btn-primary btn-success">Save</button>
 			<button type="submit" id="formSettingsBasicsClear" name="formSettingsBasicsClear" class="btn btn-primary btn-success">Clear</button>
 		</form>
 	</div>
+</div>
+
+<h5>Password</h5>
+<hr>
+
+<div class="row">
+  <div class="col-lg-12">
+    <form name="formSettingsPassword" action="settings.ctrl.php" method="post" novalidate>
+      <div class="form-group">
+        <label for="formSettingsPasswordCurrent">Current password</label>
+        <input  type="password" 
+                class="form-control <?php 
+                    echo (phpShowInputFeedback($_SESSION['msgid'])[0]); 
+                ?>" 
+                id="formSettingsPasswordCurrent" 
+                name="formSettingsPasswordCurrent" 
+                placeholder="Enter your current password" 
+                onkeyup="jsSettingsValidatePassword()">
+
+        <?php if ($_SESSION["msgid"]=="204" || $_SESSION["msgid"]=="205") { ?>
+            <div class="invalid-feedback">
+                <?php echo (phpShowInputFeedback($_SESSION["msgid"])[1]); ?>
+            </div>
+        <?php } ?>
+      </div>
+
+      <div class="form-group">
+        <label for="formSettingsPasswordNew">New password</label>
+        <input  type="password" 
+                class="form-control <?php 
+                    echo (phpShowInputFeedback($_SESSION['msgid'])[0]); 
+                ?>" 
+                id="formSettingsPasswordNew" 
+                name="formSettingsPasswordNew" 
+                placeholder="Enter your new password" 
+                onkeyup="jsSettingsValidatePassword()">
+
+        <?php if ($_SESSION["msgid"]=="206" || $_SESSION["msgid"]=="207") { ?>
+            <div class="invalid-feedback">
+                <?php echo (phpShowInputFeedback($_SESSION["msgid"])[1]); ?>
+            </div>
+        <?php } ?>
+
+        <input  type="password" 
+                class="form-control mt-4 <?php 
+                    echo (phpShowInputFeedback($_SESSION['msgid'])[0]);
+                ?>" 
+                id="formSettingsPasswordConf" 
+                name="formSettingsPasswordConf" 
+                placeholder="Confirm your new password" 
+                onkeyup="jsSettingsValidatePassword()">
+
+        <?php if ($_SESSION["msgid"]=="803") { ?>
+            <div class="invalid-feedback">
+                <?php echo (phpShowInputFeedback($_SESSION["msgid"])[1]); ?>
+            </div>
+        <?php } ?>
+
+      </div>
+      <button type="submit" id="formSettingsPasswordSubmit" name="formSettingsPasswordSubmit" class="btn btn-primary btn-success">Save</button>
+    </form>
+  </div>
 </div>

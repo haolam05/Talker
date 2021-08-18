@@ -78,6 +78,26 @@
             $feedback_text="Nickname must be between 3 and 15 characters long and can contain only letters. ";
             break;
 
+            // case "204":
+            // $feedback_type="is-invalid";
+            // $feedback_text="";
+            // break;
+            
+            // case "205":
+            // $feedback_type="is-invalid";
+            // $feedback_text="";
+            // break;
+            
+            // case "206":
+            // $feedback_type="is-invalid";
+            // $feedback_text="";
+            // break;     
+
+            // case "207":
+            // $feedback_type="is-invalid";
+            // $feedback_text="";
+            // break;
+            
             case "801":
             $feedback_type="is-invalid";
             $feedback_text="This is not a valid email address";
@@ -99,7 +119,7 @@
             break;
 
             default:
-            $feedback_type="is-invalid";
+            $feedback_type="";
             $feedback_text="Unspecified error or warning";
             break;
         }
